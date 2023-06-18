@@ -1,0 +1,14 @@
+{
+    "source": {
+      "include": [
+        "./src"
+      ]
+    },
+    "plugins": [
+      "plugins/markdown"
+    ],
+    "opts": {
+      "recurse": true,
+      "destination": "docs/"
+    }
+  }

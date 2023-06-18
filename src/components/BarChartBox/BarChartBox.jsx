@@ -2,31 +2,42 @@ import React, { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
 import { getBarData } from '../../api/api.js';
 
+
+/**
+ * BarChartBox Component
+ * @component
+ */
+
+
 export default function BarChartBox() {
+
+   /**
+   * State to manage the chart data
+   * @type {[Array<Object>, React.Dispatch<React.SetStateAction<Array<Object>>>]}
+   * @name chartDataState
+   */
   const [chartData, setchartData] = useState([])
-  let  getCurrncy = async ()=>{
+
+   /**
+   * Asynchronous function to get the chart data from an API
+   * @async
+   * @function
+   */
+  let  getCurrency = async ()=>{
       let  data  = await getBarData();
       setchartData(data);
-      console.log(data);
   }
   useEffect(() => {
-    // getCurrncy()
+    getCurrency()
   }, [])
 
-  const data = [
-    {
-      "EGP": 4000,
-      "GBP": 4000,
-      "EUR": 2400
-    },
-  ]
   return (
     <>
-    <div class="text-bg-secondary p-3 p-3">Bar Chart </div>
-    {data.length > 0 ? <div className='bg-light'> <BarChart
+    <div className="text-bg-secondary p-3 p-3">Bar Chart </div>
+    {chartData.length > 0 ? <div className='bg-light'> <BarChart
           width={500}
           height={300}
-          data={data}
+          data={chartData}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis />

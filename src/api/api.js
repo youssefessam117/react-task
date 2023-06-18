@@ -1,5 +1,12 @@
 import axios from "axios";
 
+/**
+ * Fetches the exchange rate data for the past 30 days from an API.
+ *
+ * @async
+ * @function
+ * @returns {Promise<Array<Object>>} An array of objects containing the date and exchange rate data for EUR against USD.
+ */
 export let getData = async () => {
   // Get the current date
   let currentDate = new Date();
@@ -33,6 +40,13 @@ export let getData = async () => {
   }
 };
 
+/**
+ * Fetches the current exchange rate data for EGP, GBP, and EUR against USD from an API.
+ *
+ * @async
+ * @function
+ * @returns {Promise<Array<Object>>} An array of objects containing the exchange rate data for EGP, GBP, and EUR against USD.
+ */
 export const getBarData = async () => {
   let { data } = await axios.get(
     `https://api.apilayer.com/exchangerates_data/latest?apikey=dzB2qlMArmsmjBjETDK0V3oQPCMdBBNk&symbols=EGP,GBP,EUR&base=USD`

@@ -3,18 +3,55 @@ import BarChartBox from './../BarChartBox/BarChartBox.jsx';
 import LineChartBox from './../LineChartBox/LineChartBox.jsx';
 
 
+/**
+ * Dashboard Component
+ * @component
+ */
+
 export default function Dashboard() {
+  /**
+   * State to manage the mode of the dashboard
+   * @typedef {'view' | 'edit'} Mode
+   * @type {[Mode, React.Dispatch<React.SetStateAction<Mode>>]}
+   * @name modeState
+   */
   const [mode, setmode] = useState('view')
-  const [arrLength, setarrLength] = useState(0)
+   /**
+   * State to manage which chart to delete
+   * @type {[number, React.Dispatch<React.SetStateAction<number>>]}
+   * @name deleteChartState
+   */
+  const [deleteChart, setdeleteChart] = useState(0)
  
+
+  /**
+   * Function to delete the bar chart
+   * @function
+   */
+ const deleteBarChart = ()=>{
+  setdeleteChart(1)
+ }
+
+   /**
+   * Function to delete the line chart
+   * @function
+   */
+ const deleteLineChart = ()=>{
+  setdeleteChart(2)
+ }
+
   return (
     <>
- <nav className="navbar bg-body-tertiary">
+  <nav className="navbar bg-body-tertiary">
   <div className="container-fluid">
     <span className="navbar-brand mb-0 h1">Dashboard</span>
   </div>
-</nav>
-
+  </nav>
+  {
+    deleteChart !==0 && mode === 'edit' ?<span className='p-3 rounded addButton'>
+    <i onClick={()=>setdeleteChart(0)} className="fa-solid fa-plus fs-3"></i>
+    </span>:''
+  }
     <div className="container">
       <div className="row">
       <div>
@@ -27,16 +64,18 @@ export default function Dashboard() {
       </button>
      </div>
     </div>
-    <div className={`col-md-6 barChart ${mode === 'edit' && arrLength === 0 ?'edit-style':''}`}>
-    <span className={`bar-chart-icon ${mode === 'edit' && arrLength === 0 ? 'bar-edit':''}`}><i class={`fa-solid fa-trash `}></i></span>
+    {deleteChart === 0 || deleteChart === 2 ?<div className={`col-md-6 barChart mt-3 ${mode === 'edit' && deleteChart === 0 ?'edit-style':''}`}>
+    <span onClick={deleteBarChart} className={`bar-chart-icon ${mode === 'edit' && deleteChart === 0 ? 'bar-edit':''}`}><i className={`fa-solid fa-trash `}></i></span>
     <BarChartBox/>
-    </div>
-    <div className="col-md-6">
-    <i class="fa-solid fa-trash"></i>
+    </div>:''}
+    {deleteChart === 0 || deleteChart === 1 ? <div className={`col-md-6 barChart mt-3 ${mode === 'edit' && deleteChart === 0 ?'edit-style':''}`}>
+    <span onClick={deleteLineChart} className={`bar-chart-icon ${mode === 'edit' && deleteChart === 0 ? 'bar-edit':''}`}><i className={`fa-solid fa-trash `}></i></span>
     <LineChartBox/>
-    </div>
+    </div>:''}
       </div>
     </div>
     </>
   )
 }
+
+
